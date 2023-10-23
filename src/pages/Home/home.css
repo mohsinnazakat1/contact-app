@@ -1,0 +1,188 @@
+.app-page {
+    height: 100dvh;
+    overflow-y: scroll;
+}
+.home-page {
+    height: 100dvh;
+    position: relative;
+    /* overflow-y: scroll; */
+}
+.banner {
+    position: relative;
+    min-height: 520px;
+}
+.banner-logo {
+    position: relative;
+}
+.banner-text {
+    width: 80%;
+    position: absolute;
+    top: 5%;
+    transform: translate(29px, 12px);
+    text-transform: uppercase;
+}
+.app {
+    position: absolute;
+    top: calc(30% - 80px);
+    width: 100%;
+}
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0px 62px 26px 62px;
+}
+.info-list-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.info-heading {
+    padding: 2px 26px 17px 26px;
+    text-align: center;
+}
+.page-bottom {
+    padding: 0px 20px 20px 20px;
+}
+.btn-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+.btn {
+    /* width: 133px;
+    height: 69px; */
+    padding: 7px 27px;
+}
+.btn-fill {
+    background-color: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--white);
+}
+.btn-unfill {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid var(--white);
+}
+.price {
+    font-family: 'Noto Sans';
+    font-size: 35.778px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.price-cents {
+    font-family: 'Noto Sans';
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.price-text {
+    font-family: 'Noto Sans';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.bottom-setting {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0px;
+}
+.setting-icon {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    border-radius: 8px;
+    border: 1px solid var(--white);
+    display: flex;
+    align-items: center;
+}
+.adm-popup-body {
+    background: linear-gradient(65deg, #0358A7 0%, #0084CD 25%, #00AFDF 50%, #00D9DD 87.56%, #32FFCE 100%);
+}
+.adm-popup-body-position-bottom {
+    width: 90% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important;
+}
+.adm-action-sheet-popup > .adm-popup-body {
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+}
+.adm-action-sheet-button-item {
+    padding: 5px 16px !important;
+    background-color: transparent !important;
+}
+.adm-action-sheet-button-item-wrapper, .adm-action-sheet-button-list {
+    border-bottom: none !important;
+}
+.adm-action-sheet-button-list {
+    padding: 32px 0px;
+}
+.action-btn {
+    width: 275px;
+    /* height: 44px; */
+    padding: 16px;
+    border-radius: 50px;
+}
+.btn-delete {
+    border: 1px solid var(--red);
+    background: var(--red);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.05);
+    color: var(--white);
+}
+.btn-logout {
+    border: 1px solid var(--white);
+    background: var(--white);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.05);
+    color: var(--primary);
+}
+.home-page-sections {
+    padding: 10px 20px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 375px) {
+    .app {
+        top: calc(29% - 100px);
+    }
+    .page-detail {
+        position: absolute;
+        bottom: 0;
+    }
+    .info-list {
+        padding: 26px 62px;
+    }
+    .price{
+        font-family: 'Noto Sans';
+        font-size: 30.635px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .price-cents {
+        font-family: 'Noto Sans';
+        font-size: 23.976px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+    .price-text {
+        font-family: 'Noto Sans';
+        font-size: 12.844px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+}
+@media only screen and (max-width: 390px) {}
+@media only screen and (max-width: 414px) {
+    .page-detail {
+        position: absolute;
+        bottom: 3%;
+    }
+}

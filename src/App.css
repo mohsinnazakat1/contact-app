@@ -1,38 +1,176 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700;900&display=swap');
+
+:root {
+    --primary: #00B0A7;
+    --white: #FFFFFF;
+    --black: #2D2C2C;
+    --red: #EC0047;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+    width: 100%;
+    height: 100dvh;
+    background: linear-gradient(65deg, #0358A7 0%, #0084CD 25%, #00AFDF 50%, #00D9DD 75%, #32FFCE 100%);
+    /* background: url(''), lightgray -14.025px 13.573px / 130.081% 95.132% no-repeat; */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text-white {
+    color: var(--white);
 }
 
-.App-link {
-  color: #61dafb;
+.text-black {
+    color: var(--black);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.app-loading {
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FNS-12-N400 {
+    font-family: 'Noto Sans';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    /* letter-spacing: -0.6px; */
+}
+
+.FNS-14-N500 {
+    font-family: 'Noto Sans';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+   
+    letter-spacing: -0.6px;
+}
+.FNS-16-N400 {
+    font-family: 'Noto Sans';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.FNS-16-N800 {
+    font-family: 'Noto Sans';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 20px;
+    letter-spacing: 0.08px;
+}
+
+.FNS-20-N700 {
+    font-family: 'Noto Sans';
+    font-size: 20.092px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24.11px;
+    letter-spacing: -0.6px;
+}
+
+.FNS-24-N800 {
+    font-family:'Noto Sans';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 30px;
+    letter-spacing: 0.12px;
+}
+
+.FNS-30-N700 {
+    font-family: 'Noto Sans';
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+    letter-spacing: -0.6px;
+}
+
+@media screen and (max-width: 411px) {
+    .FNS-20-N700 {
+        font-family: 'Noto Sans';
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 19px;
+        letter-spacing: 0em;
+    }
+    
+    .FNS-30-N700 {
+        font-family: 'Noto Sans';
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 28px;
+        letter-spacing: -0.02em;
+
+    }
+    /* .FNS-14-N500 {
+        font-family: 'Noto Sans';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 14.473px;
+    } */
+    .FNS-24-N800{
+        font-family: 'Noto Sans';
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 18px;
+    }
+    .FNS-16-N800 {
+        font-family: 'Noto Sans';
+        font-size: 13.7px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: 17.125px; /* 125% */
+        letter-spacing: 0.069px;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .FNS-24-N800 {
+        font-family: 'Noto Sans';
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: 30px;
+        letter-spacing: 0.12px;
+    }
+    /* .FNS-14-N500 {
+        font-family: 'Noto Sans';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: -0.6px;
+    } */
+    .FNS-24-N800 {
+        font-family: 'Noto Sans';
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 18px;
+    }
 }
