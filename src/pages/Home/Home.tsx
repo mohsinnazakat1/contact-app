@@ -77,10 +77,9 @@ export default function Home() {
 
     const handlePerMonthAmount = () => {
         if (window?.android) {
-            // const value = window?.android?.getAuthorizationToken();
             window?.android?.clickedOnPerMonthSubscription();
         } else {
-            Toast.show('$0.99');
+            window?.webkit?.messageHandlers?.postMessage('IOS_ONE_MONTH_TEST');
         };
     };
 
@@ -88,7 +87,7 @@ export default function Home() {
         if (window?.android) {
             window?.android?.clickedOnPerYearSubscription();
         } else {
-            Toast.show('$9.99')
+            window?.webkit?.messageHandlers?.postMessage('IOS_ONE_YEAR_TEST');
         };
     };
 
