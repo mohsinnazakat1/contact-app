@@ -29,16 +29,16 @@ export default function Home() {
         interval: '',
         googleBasePlanId: '',
     });
-    const [deviceRequest, setDeviceRequest] =useState<device>({
-        platform: '',
-        subscriptionType: '',
-    });
+    // const [deviceRequest, setDeviceRequest] = useState<device>({
+    //     platform: '',
+    //     subscriptionType: '',
+    // });
 
     // useEffect(() => {
-    //     if(deviceRequest.platform !== ''){
+    //     if (deviceRequest.platform !== '') {
     //         const { platform, subscriptionType } = deviceRequest;
     //         getSubscription(platform, subscriptionType);
-    //     }
+    //     };
     // }, [deviceRequest]);
 
     useEffect(() => {
@@ -46,9 +46,9 @@ export default function Home() {
         //     const subscriptionType = window?.android?.getSubscriptionType();
         //     const platform = window?.android?.getPlatform();
 
-        //     setDeviceRequest({platform, subscriptionType});
+        //     setDeviceRequest({ platform, subscriptionType });
         // };
-        getSubscription('android', 'FREE_TRIAL');
+        getSubscription(window?.android?.getSubscriptionType(), window?.android?.getPlatform());
     }, []);
 
     const getSubscription = async (platform: String, subscriptionType: String) => {
@@ -96,16 +96,18 @@ export default function Home() {
         if (window?.android) {
             window?.android?.clickedOnDeleteAccountBtn();
         } else {
-            window?.webkit?.messageHandlers?.deleteAccount?.postMessage();
+            window?.webkit?.messageHandlers?.deleteAccount?.postMessage('1');
         };
+
     };
 
     const handleLogout = () => {
         if (window?.android) {
             window?.android?.clickedOnLogoutBtn();
         } else {
-            window?.webkit?.messageHandlers?.logOut?.postMessage();
+            window?.webkit?.messageHandlers?.logOut?.postMessage('01');
         };
+
     };
 
     return (
@@ -122,21 +124,33 @@ export default function Home() {
                                 <div className='banner-logo'>
                                     <AppIcon />
                                     <div className='banner-text'>
-                                        <p className='FNS-20-N700 text-white'>Experience a new way</p>
-                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p>
+                                        <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
+                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
+                                        {/* <p className='FNS-20-N700 text-white'>Experience a new way</p>
+                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p> */}
                                     </div>
                                 </div>
                                 <picture>
                                     <source media="(min-width: 414px)" srcSet={Folks} className='app' />
                                     <source media="(min-width: 411px)" srcSet={FolksS} className='app' />
-                                    <source media="(min-width: 390px)" srcSet={Folks} className='app'/>
-                                    <source media="(min-width: 375px)" srcSet={FolksS} className='app'/>
+                                    <source media="(min-width: 390px)" srcSet={Folks} className='app' />
+                                    <source media="(min-width: 375px)" srcSet={FolksS} className='app' />
                                     <img src={Folks} alt="IfItDoesntMatchAnyMedia" className='app' />
                                 </picture>
                             </div>
                             <div className='page-detail'>
                                 <div className='info-list'>
-                                    <div className='info-list-item'>
+                                    {
+                                        pageData?.bulletPoints?.map(item => {
+                                            return (
+                                                <div className='info-list-item'>
+                                                    <div><TickIcon /></div>
+                                                    <p className='FNS-14-N500 text-white'>{item}</p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {/* <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>Get live notifications when people are close-by</p>
                                     </div>
@@ -147,10 +161,10 @@ export default function Home() {
                                     <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>AI helper tool to break the ice with new matches</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className='info-heading'>
-                                    <p className='FNS-24-N800 text-white text-uppercase'>Get unlimited number of swipes!</p>
+                                    <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p>
                                 </div>
                                 <div className='page-bottom'>
                                     <div className='btn-section'>
@@ -181,7 +195,7 @@ export default function Home() {
                                 </p>
                             </div>
                             <div className='bottom-setting'>
-                                <Imperative handleDelete={handleDelete} handleLogout={handleLogout}/>
+                                <Imperative handleDelete={handleDelete} handleLogout={handleLogout} />
                             </div>
                         </div>
                     </>
