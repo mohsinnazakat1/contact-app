@@ -79,7 +79,7 @@ export default function Home() {
         if (window?.android) {
             window?.android?.clickedOnPerMonthSubscription();
         } else {
-            window?.webkit?.messageHandlers?.postMessage('IOS_ONE_MONTH_TEST');
+            window?.webkit?.messageHandlers?.month?.postMessage(process.env.IOS_PM);
         };
     };
 
@@ -87,7 +87,7 @@ export default function Home() {
         if (window?.android) {
             window?.android?.clickedOnPerYearSubscription();
         } else {
-            window?.webkit?.messageHandlers?.postMessage('IOS_ONE_YEAR_TEST');
+            window?.webkit?.messageHandlers?.year?.postMessage(process.env.IOS_PY);
         };
     };
 
