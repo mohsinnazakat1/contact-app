@@ -1,5 +1,21 @@
 {
   "projects": {
     "default": "cont-tact"
-  }
+  },
+  "targets": {
+    "cont-tact": {
+      "hosting": {
+        "test": [
+          "test-contact"
+        ],
+        "public": [
+          "resources"
+        ],
+        "production": [
+          "con-tact"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
