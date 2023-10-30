@@ -48,7 +48,7 @@ export default function Home() {
 
         //     setDeviceRequest({ platform, subscriptionType });
         // };
-        getSubscription(window?.android?.getSubscriptionType(), window?.android?.getPlatform());
+        // getSubscription(window?.android?.getSubscriptionType(), window?.android?.getPlatform());
     }, []);
 
     const getSubscription = async (platform: String, subscriptionType: String) => {
@@ -123,10 +123,10 @@ export default function Home() {
                                 <div className='banner-logo'>
                                     <AppIcon />
                                     <div className='banner-text'>
-                                        <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
-                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
-                                        {/* <p className='FNS-20-N700 text-white'>Experience a new way</p>
-                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p> */}
+                                        {/* <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
+                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p> */}
+                                        <p className='FNS-20-N700 text-white'>Experience a new way</p>
+                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p>
                                     </div>
                                 </div>
                                 <picture>
@@ -139,7 +139,7 @@ export default function Home() {
                             </div>
                             <div className='page-detail'>
                                 <div className='info-list'>
-                                    {
+                                    {/* {
                                         pageData?.bulletPoints?.map(item => {
                                             return (
                                                 <div className='info-list-item'>
@@ -148,8 +148,8 @@ export default function Home() {
                                                 </div>
                                             )
                                         })
-                                    }
-                                    {/* <div className='info-list-item'>
+                                    } */}
+                                    <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>Get live notifications when people are close-by</p>
                                     </div>
@@ -160,10 +160,11 @@ export default function Home() {
                                     <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>AI helper tool to break the ice with new matches</p>
-                                    </div> */}
+                                    </div>
                                 </div>
                                 <div className='info-heading'>
-                                    <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p>
+                                    {/* <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p> */}
+                                    <p className='FNS-24-N800 text-white text-uppercase'>Get unlimited number of swipes!</p>
                                 </div>
                                 <div className='page-bottom'>
                                     <div className='btn-section'>
