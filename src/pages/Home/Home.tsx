@@ -1,15 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './home.css';
 import axios from 'axios';
-import Folks from '../../assets/svgs/folks.svg';
-import FolksS from '../../assets/svgs/folksS.svg';
+import Folks from '../../assets/svgs/banner.svg';
+import FolksS from '../../assets/svgs/banner.svg';
 import { ActionSheet, Toast, DotLoading } from 'antd-mobile';
 import type {
     Action,
     ActionSheetShowHandler,
 } from 'antd-mobile/es/components/action-sheet';
 import { AppIcon, TickIcon, SettingIcon } from '../../assets/svgs/icons';
-import { pageDataProps, device } from '../../types/index';
+import { pageDataProps } from '../../types/index';
 
 type SubProps = {
     handleDelete: () => void,
@@ -17,6 +18,7 @@ type SubProps = {
 };
 
 export default function Home() {
+    const [urlSearchParams, setUrlSearchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [pageData, setPageData] = useState<pageDataProps>({
         id: null,
@@ -29,27 +31,20 @@ export default function Home() {
         interval: '',
         googleBasePlanId: '',
     });
-    // const [deviceRequest, setDeviceRequest] = useState<device>({
-    //     platform: '',
-    //     subscriptionType: '',
-    // });
-
-    // useEffect(() => {
-    //     if (deviceRequest.platform !== '') {
-    //         const { platform, subscriptionType } = deviceRequest;
-    //         getSubscription(platform, subscriptionType);
-    //     };
-    // }, [deviceRequest]);
+    
+    const deviceType = useMemo(() => {
+        const platform = urlSearchParams.get('platform');
+        const subscriptionType = urlSearchParams.get('subscriptionType');
+        return { platform: platform || '', subscriptionType: subscriptionType || '' }
+	}, [urlSearchParams]);
 
     useEffect(() => {
-        // if (window?.android) {
-        //     const subscriptionType = window?.android?.getSubscriptionType();
-        //     const platform = window?.android?.getPlatform();
-
-        //     setDeviceRequest({ platform, subscriptionType });
-        // };
-        // getSubscription(window?.android?.getSubscriptionType(), window?.android?.getPlatform());
-    }, []);
+        console.log('deviceType', deviceType);
+        if(deviceType?.hasOwnProperty('subscriptionType')){
+            const { subscriptionType, platform } = deviceType;
+            getSubscription(platform, subscriptionType);
+        };
+    }, [deviceType]);
 
     const getSubscription = async (platform: String, subscriptionType: String) => {
         setIsLoading(true);
@@ -123,10 +118,10 @@ export default function Home() {
                                 <div className='banner-logo'>
                                     <AppIcon />
                                     <div className='banner-text'>
-                                        {/* <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
-                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p> */}
-                                        <p className='FNS-20-N700 text-white'>Experience a new way</p>
-                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p>
+                                        <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
+                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
+                                        {/* <p className='FNS-20-N700 text-white'>Experience a new way</p>
+                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p> */}
                                     </div>
                                 </div>
                                 <picture>
@@ -139,7 +134,7 @@ export default function Home() {
                             </div>
                             <div className='page-detail'>
                                 <div className='info-list'>
-                                    {/* {
+                                    {
                                         pageData?.bulletPoints?.map(item => {
                                             return (
                                                 <div className='info-list-item'>
@@ -148,8 +143,8 @@ export default function Home() {
                                                 </div>
                                             )
                                         })
-                                    } */}
-                                    <div className='info-list-item'>
+                                    }
+                                    {/* <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>Get live notifications when people are close-by</p>
                                     </div>
@@ -160,7 +155,7 @@ export default function Home() {
                                     <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>AI helper tool to break the ice with new matches</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className='info-heading'>
                                     {/* <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p> */}
