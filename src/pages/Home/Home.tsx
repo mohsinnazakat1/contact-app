@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './home.css';
 import axios from 'axios';
-import Folks from '../../assets/svgs/folks.svg';
-import FolksS from '../../assets/svgs/folksS.svg';
+import Folks from '../../assets/svgs/banner.svg';
+import FolksS from '../../assets/svgs/banner.svg';
 import { ActionSheet, Toast, DotLoading } from 'antd-mobile';
 import type {
     Action,
