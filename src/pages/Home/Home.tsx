@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import './home.css';
 import axios from 'axios';
 import Folks from '../../assets/svgs/banner.svg';
@@ -10,7 +10,7 @@ import type {
     ActionSheetShowHandler,
 } from 'antd-mobile/es/components/action-sheet';
 import { AppIcon, TickIcon, SettingIcon } from '../../assets/svgs/icons';
-import { pageDataProps } from '../../types/index';
+import { pageDataProps, languages } from '../../types/index';
 
 type SubProps = {
     handleDelete: () => void,
@@ -20,6 +20,7 @@ type SubProps = {
 export default function Home() {
     const [urlSearchParams, setUrlSearchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [deviceLang, setDeviceLang] = useState<String>('en');
     const [pageData, setPageData] = useState<pageDataProps>({
         id: null,
         platform: '',
@@ -31,17 +32,25 @@ export default function Home() {
         interval: '',
         googleBasePlanId: '',
     });
+
+    const lang:languages = {
+        en: 'https://www.con-tact.com/privacy-policy-usa/',
+        de: 'https://www.con-tact.com/de/datenschutz/',
+    };
     
     const deviceType = useMemo(() => {
         const platform = urlSearchParams.get('platform');
         const subscriptionType = urlSearchParams.get('subscriptionType');
-        return { platform: platform || '', subscriptionType: subscriptionType || '' }
+        const lang = urlSearchParams.get('lang');
+
+        return { platform: platform || '', subscriptionType: subscriptionType || '', lang: lang || '' }
 	}, [urlSearchParams]);
 
     useEffect(() => {
         console.log('deviceType', deviceType);
         if(deviceType?.hasOwnProperty('subscriptionType')){
-            const { subscriptionType, platform } = deviceType;
+            const { subscriptionType, platform, lang } = deviceType;
+            setDeviceLang(lang);
             getSubscription(platform, subscriptionType);
         };
     }, [deviceType]);
@@ -186,7 +195,7 @@ export default function Home() {
                             <div className='bottom-info'>
                                 <p className='FNS-12-N400 text-white'>
                                     Your subscription will auto-renew at the end of the subscription period, unless cancelled 24 hours in advance or during the free trial period. The fee is charged to your iTunes account at confirmation of purchase. You may manage vour subscriptions and turn off the auto-renewal by going to your Account Settings. No cancellation of the current subscription is allowed during active subscription period. By joining you accept our
-                                    &nbsp;<span className='text-underline cursor-pointer'>Terms of Use and Privacy Policy</span>.
+                                    &nbsp;<Link to={`${lang[deviceLang as keyof typeof lang]}`} className='text-white'><span className='text-underline cursor-pointer'>Terms of Use and Privacy Policy</span></Link>.
                                 </p>
                             </div>
                             <div className='bottom-setting'>

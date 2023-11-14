@@ -23,6 +23,11 @@ type device = {
     subscriptionType: String | null,
 }
 
+type languages = {
+    en: String,
+    de: string,
+}
+
 export type {
-    pageDataProps, device,
+    pageDataProps, device, languages,
 };
