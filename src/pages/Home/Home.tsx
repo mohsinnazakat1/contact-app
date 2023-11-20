@@ -20,6 +20,7 @@ type SubProps = {
 export default function Home() {
     const [urlSearchParams, setUrlSearchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSkip, setIsSkip] = useState<boolean>(true);
     const [deviceLang, setDeviceLang] = useState<String>('en');
     const [pageData, setPageData] = useState<pageDataProps>({
         id: null,
@@ -42,14 +43,21 @@ export default function Home() {
         const platform = urlSearchParams.get('platform');
         const subscriptionType = urlSearchParams.get('subscriptionType');
         const lang = urlSearchParams.get('lang');
+        const skip = urlSearchParams.get('shouldSkip') || '';
 
-        return { platform: platform || '', subscriptionType: subscriptionType || '', lang: lang || '' }
+        return { 
+            platform: platform || '', 
+            subscriptionType: subscriptionType || '', 
+            lang: lang || '',
+            skip: skip.toLowerCase() === 'true',
+        }
 	}, [urlSearchParams]);
 
     useEffect(() => {
-        console.log('deviceType', deviceType);
+        // console.log('deviceType', deviceType);
         if(deviceType?.hasOwnProperty('subscriptionType')){
-            const { subscriptionType, platform, lang } = deviceType;
+            const { subscriptionType, platform, lang, skip } = deviceType;
+            setIsSkip(skip);
             setDeviceLang(lang);
             getSubscription(platform, subscriptionType);
         };
@@ -92,6 +100,14 @@ export default function Home() {
             window?.android?.clickedOnPerYearSubscription();
         } else {
             window?.webkit?.messageHandlers?.year?.postMessage(process.env.IOS_PY);
+        };
+    };
+
+    const handleNotNow = () => {
+        if (window?.android) {
+            window?.android?.skipSubscription();
+        } else {
+            window?.webkit?.messageHandlers?.skipSubscription();
         };
     };
 
@@ -189,6 +205,11 @@ export default function Home() {
                                         </button>
                                     </div>
                                 </div>
+                                {
+                                    !isSkip && <div className='info-heading' onClick={handleNotNow}>
+                                        <p className='FNS-14-N500 text-white'>Not now</p>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className='home-page-sections'>
