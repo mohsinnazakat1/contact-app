@@ -26,6 +26,7 @@ type device = {
 type languages = {
     en: String,
     de: string,
+    es: string,
 }
 
 export type {

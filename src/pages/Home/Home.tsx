@@ -37,6 +37,7 @@ export default function Home() {
     const lang:languages = {
         en: 'https://www.con-tact.com/privacy-policy-usa/',
         de: 'https://www.con-tact.com/de/datenschutz/',
+        es: '',
     };
     
     const deviceType = useMemo(() => {
@@ -57,16 +58,19 @@ export default function Home() {
         // console.log('deviceType', deviceType);
         if(deviceType?.hasOwnProperty('subscriptionType')){
             const { subscriptionType, platform, lang, skip } = deviceType;
+            const upercaseLang = lang.toUpperCase();
             setIsSkip(skip);
             setDeviceLang(lang);
-            getSubscription(platform, subscriptionType);
+            getSubscription(platform, subscriptionType, upercaseLang);
         };
     }, [deviceType]);
 
-    const getSubscription = async (platform: String, subscriptionType: String) => {
+    const getSubscription = async (platform: String, subscriptionType: String, lang: String) => {
         setIsLoading(true);
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/subscription-type?platform=${platform}&subscriptionType=${subscriptionType}`).then(res => {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/subscription-type?platform=${platform}&subscriptionType=${subscriptionType}`, {
+                headers: { 'accept-language': `${lang}` }
+            }).then(res => {
                 return res;
             }).catch(error => {
                 return error;
@@ -107,7 +111,8 @@ export default function Home() {
         if (window?.android) {
             window?.android?.skipSubscription();
         } else {
-            window?.webkit?.messageHandlers?.skipSubscription();
+            // window?.webkit?.messageHandlers?.skipSubscription();
+            window?.webkit?.messageHandlers?.notNow?.postMessage('notNow');
         };
     };
 
@@ -169,22 +174,10 @@ export default function Home() {
                                             )
                                         })
                                     }
-                                    {/* <div className='info-list-item'>
-                                        <div><TickIcon /></div>
-                                        <p className='FNS-14-N500 text-white'>Get live notifications when people are close-by</p>
-                                    </div>
-                                    <div className='info-list-item'>
-                                        <div><TickIcon /></div>
-                                        <p className='FNS-14-N500 text-white'>Unlimited number of swipes & chats</p>
-                                    </div>
-                                    <div className='info-list-item'>
-                                        <div><TickIcon /></div>
-                                        <p className='FNS-14-N500 text-white'>AI helper tool to break the ice with new matches</p>
-                                    </div> */}
                                 </div>
                                 <div className='info-heading'>
-                                    {/* <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p> */}
-                                    <p className='FNS-24-N800 text-white text-uppercase'>Get unlimited number of swipes!</p>
+                                    <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p>
+                                    {/* <p className='FNS-24-N800 text-white text-uppercase'>Get unlimited number of swipes!</p> */}
                                 </div>
                                 <div className='page-bottom'>
                                     <div className='btn-section'>
