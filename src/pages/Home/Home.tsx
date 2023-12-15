@@ -149,7 +149,7 @@ export default function Home() {
                                     <AppIcon />
                                     <div className='banner-text'>
                                         <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
-                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
+                                        <p className={`${deviceType?.lang == 'de' ? 'FNS-20-N700': 'FNS-30-N700'} text-white`}>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
                                         {/* <p className='FNS-20-N700 text-white'>Experience a new way</p>
                                         <p className='FNS-30-N700 text-white'>of meeting people in real life</p> */}
                                     </div>
