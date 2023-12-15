@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import './home.css';
 import axios from 'axios';
 import Folks from '../../assets/svgs/banner.svg';
@@ -9,7 +10,7 @@ import type {
     ActionSheetShowHandler,
 } from 'antd-mobile/es/components/action-sheet';
 import { AppIcon, TickIcon, SettingIcon } from '../../assets/svgs/icons';
-import { pageDataProps, device } from '../../types/index';
+import { pageDataProps, languages } from '../../types/index';
 
 type SubProps = {
     handleDelete: () => void,
@@ -17,7 +18,10 @@ type SubProps = {
 };
 
 export default function Home() {
+    const [urlSearchParams, setUrlSearchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSkip, setIsSkip] = useState<boolean>(true);
+    const [deviceLang, setDeviceLang] = useState<String>('en');
     const [pageData, setPageData] = useState<pageDataProps>({
         id: null,
         platform: '',
@@ -29,27 +33,35 @@ export default function Home() {
         interval: '',
         googleBasePlanId: '',
     });
-    // const [deviceRequest, setDeviceRequest] = useState<device>({
-    //     platform: '',
-    //     subscriptionType: '',
-    // });
 
-    // useEffect(() => {
-    //     if (deviceRequest.platform !== '') {
-    //         const { platform, subscriptionType } = deviceRequest;
-    //         getSubscription(platform, subscriptionType);
-    //     };
-    // }, [deviceRequest]);
+    const lang:languages = {
+        en: 'https://www.con-tact.com/privacy-policy-usa/',
+        de: 'https://www.con-tact.com/de/datenschutz/',
+    };
+    
+    const deviceType = useMemo(() => {
+        const platform = urlSearchParams.get('platform');
+        const subscriptionType = urlSearchParams.get('subscriptionType');
+        const lang = urlSearchParams.get('lang');
+        const skip = urlSearchParams.get('shouldSkip') || '';
+
+        return { 
+            platform: platform || '', 
+            subscriptionType: subscriptionType || '', 
+            lang: lang || '',
+            skip: skip.toLowerCase() === 'true',
+        }
+	}, [urlSearchParams]);
 
     useEffect(() => {
-        // if (window?.android) {
-        //     const subscriptionType = window?.android?.getSubscriptionType();
-        //     const platform = window?.android?.getPlatform();
-
-        //     setDeviceRequest({ platform, subscriptionType });
-        // };
-        // getSubscription(window?.android?.getSubscriptionType(), window?.android?.getPlatform());
-    }, []);
+        // console.log('deviceType', deviceType);
+        if(deviceType?.hasOwnProperty('subscriptionType')){
+            const { subscriptionType, platform, lang, skip } = deviceType;
+            setIsSkip(skip);
+            setDeviceLang(lang);
+            getSubscription(platform, subscriptionType);
+        };
+    }, [deviceType]);
 
     const getSubscription = async (platform: String, subscriptionType: String) => {
         setIsLoading(true);
@@ -91,6 +103,14 @@ export default function Home() {
         };
     };
 
+    const handleNotNow = () => {
+        if (window?.android) {
+            window?.android?.skipSubscription();
+        } else {
+            window?.webkit?.messageHandlers?.skipSubscription();
+        };
+    };
+
     const handleDelete = () => {
         if (window?.android) {
             window?.android?.clickedOnDeleteAccountBtn();
@@ -123,10 +143,10 @@ export default function Home() {
                                 <div className='banner-logo'>
                                     <AppIcon />
                                     <div className='banner-text'>
-                                        {/* <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
-                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p> */}
-                                        <p className='FNS-20-N700 text-white'>Experience a new way</p>
-                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p>
+                                        <p className='FNS-20-N700 text-white'>{pageData?.title?.slice(0, pageData?.title.indexOf(' of'))}</p>
+                                        <p className='FNS-30-N700 text-white'>{pageData?.title?.slice(pageData?.title.indexOf(' of') + 1)}</p>
+                                        {/* <p className='FNS-20-N700 text-white'>Experience a new way</p>
+                                        <p className='FNS-30-N700 text-white'>of meeting people in real life</p> */}
                                     </div>
                                 </div>
                                 <picture>
@@ -139,7 +159,7 @@ export default function Home() {
                             </div>
                             <div className='page-detail'>
                                 <div className='info-list'>
-                                    {/* {
+                                    {
                                         pageData?.bulletPoints?.map(item => {
                                             return (
                                                 <div className='info-list-item'>
@@ -148,8 +168,8 @@ export default function Home() {
                                                 </div>
                                             )
                                         })
-                                    } */}
-                                    <div className='info-list-item'>
+                                    }
+                                    {/* <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>Get live notifications when people are close-by</p>
                                     </div>
@@ -160,7 +180,7 @@ export default function Home() {
                                     <div className='info-list-item'>
                                         <div><TickIcon /></div>
                                         <p className='FNS-14-N500 text-white'>AI helper tool to break the ice with new matches</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className='info-heading'>
                                     {/* <p className='FNS-24-N800 text-white text-uppercase'>{pageData?.subtitle}</p> */}
@@ -185,13 +205,18 @@ export default function Home() {
                                         </button>
                                     </div>
                                 </div>
+                                {
+                                    !isSkip && <div className='info-heading' onClick={handleNotNow}>
+                                        <p className='FNS-14-N500 text-white'>Not now</p>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <div className='home-page-sections'>
                             <div className='bottom-info'>
                                 <p className='FNS-12-N400 text-white'>
                                     Your subscription will auto-renew at the end of the subscription period, unless cancelled 24 hours in advance or during the free trial period. The fee is charged to your iTunes account at confirmation of purchase. You may manage vour subscriptions and turn off the auto-renewal by going to your Account Settings. No cancellation of the current subscription is allowed during active subscription period. By joining you accept our
-                                    &nbsp;<span className='text-underline cursor-pointer'>Terms of Use and Privacy Policy</span>.
+                                    &nbsp;<Link to={`${lang[deviceLang as keyof typeof lang]}`} className='text-white'><span className='text-underline cursor-pointer'>Terms of Use and Privacy Policy</span></Link>.
                                 </p>
                             </div>
                             <div className='bottom-setting'>

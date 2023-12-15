@@ -19,10 +19,15 @@ type pageDataProps = {
     googleBasePlanId: String,
 };
 type device = {
-    platform: String,
-    subscriptionType: String,
+    platform: String | null,
+    subscriptionType: String | null,
+}
+
+type languages = {
+    en: String,
+    de: string,
 }
 
 export type {
-    pageDataProps, device,
+    pageDataProps, device, languages,
 };
