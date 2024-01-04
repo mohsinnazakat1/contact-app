@@ -35,7 +35,7 @@ export default function Home() {
     });
 
     const lang:languages = {
-        en: 'https://www.con-tact.com/privacy-policy-usa/',
+        en: 'https://www.con-tact.com/en-privacy-policy/',
         de: 'https://www.con-tact.com/de/datenschutz/',
         es: '',
     };
