@@ -41,7 +41,7 @@ export default function Home() {
     };
     
     const deviceType = useMemo(() => {
-        const platform = urlSearchParams.get('platform');
+        const platform = urlSearchParams.get('subscription-type?platform');
         const subscriptionType = urlSearchParams.get('subscriptionType');
         const lang = urlSearchParams.get('lang');
         const skip = urlSearchParams.get('shouldSkip') || '';
@@ -55,7 +55,7 @@ export default function Home() {
 	}, [urlSearchParams]);
 
     useEffect(() => {
-        // console.log('deviceType', deviceType);
+        console.log('deviceType', deviceType);
         if(deviceType?.hasOwnProperty('subscriptionType')){
             const { subscriptionType, platform, lang, skip } = deviceType;
             const upercaseLang = lang.toUpperCase();
