@@ -41,7 +41,7 @@ export default function Home() {
     };
     
     const deviceType = useMemo(() => {
-        const platform = urlSearchParams.get('subscription-type?platform');
+        const platform = urlSearchParams.get('platform');
         const subscriptionType = urlSearchParams.get('subscriptionType');
         const lang = urlSearchParams.get('lang');
         const skip = urlSearchParams.get('shouldSkip') || '';
