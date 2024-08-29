@@ -25,7 +25,10 @@ export default function Home() {
     const [pageData, setPageData] = useState<pageDataProps>({
         id: null,
         platform: '',
-        price: '',
+        price: {
+            per_month: 0,
+            per_year: 0
+        },
         bulletPoints: [],
         subscriptionId: '',
         subtitle: '',
@@ -68,7 +71,8 @@ export default function Home() {
     const getSubscription = async (platform: String, subscriptionType: String, lang: String) => {
         setIsLoading(true);
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/subscription-type?platform=${platform}&subscriptionType=${subscriptionType}`, {
+            // https://dev.con-tact.com/v1/api/subscription-type?platform=android&subscriptionType=LIMITED_ACCESS
+            const res = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/subscription-type?subscriptionType=${subscriptionType}&platform=${platform}`, {
                 headers: { 'accept-language': `${lang}` }
             }).then(res => {
                 return res;
@@ -80,7 +84,9 @@ export default function Home() {
 
             if (status == 200) {
                 console.log('subscription working', data);
-                setPageData(data[0]);
+                const pricePerMonth = data[0].price
+                const pricePerYear = data[1].price
+                setPageData({ ...data[0], price: { per_month: pricePerMonth, per_year: pricePerYear }});
                 setIsLoading(false);
             } else {
                 console.log('Not working');
@@ -183,16 +189,16 @@ export default function Home() {
                                     <div className='btn-section'>
                                         <button className='btn btn-unfill' onClick={handlePerMonthAmount}>
                                             <p className='text-white'>
-                                                <span className='price'>$0</span>
-                                                <span className='price-cents'>.99</span><br />
+                                                <span className='price'>${Math.floor(pageData?.price?.per_month)}</span>
+                                                <span className='price-cents'>{(pageData?.price?.per_month - Math.floor(pageData?.price?.per_month)).toFixed(2).substring(1)}</span><br />
                                                 <span className='price-text'>per month</span>
                                             </p>
                                         </button>
                                         <p className='FNS-16-N800 text-white text-uppercase'>Or</p>
                                         <button className='btn btn-fill' onClick={handlePerAnumAmount}>
                                             <p className=''>
-                                                <span className='price'>$9</span>
-                                                <span className='price-cents'>.99</span><br />
+                                            <span className='price'>${Math.floor(pageData?.price?.per_year)}</span>
+                                                <span className='price-cents'>{(pageData?.price?.per_year - Math.floor(pageData?.price?.per_year)).toFixed(2).substring(1)}</span><br />
                                                 <span className='price-text'>per year</span>
                                             </p>
                                         </button>

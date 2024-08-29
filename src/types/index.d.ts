@@ -10,7 +10,10 @@ declare global {
 type pageDataProps = {
     id: Number | null,
     platform: String,
-    price: String,
+    price: {
+        per_month: number,
+        per_year: number
+    },
     bulletPoints: String[],
     subscriptionId: String,
     subtitle: String,
