@@ -76,7 +76,9 @@ export default function Home() {
 
             if (status == 200) {
                 console.log('subscription working', data);
-                setPageData(data[0]);
+                const pricePerYear = data[0].price
+                const pricePerMonth = data[1].price
+                setPageData({ ...data[0], price: { per_month: pricePerMonth, per_year: pricePerYear }});
                 setIsLoading(false);
             } else {
                 console.log('Not working');
