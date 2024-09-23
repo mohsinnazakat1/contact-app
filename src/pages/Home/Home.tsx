@@ -84,8 +84,8 @@ export default function Home() {
 
             if (status == 200) {
                 console.log('subscription working', data);
-                const pricePerMonth = data[0].price
-                const pricePerYear = data[1].price
+                const pricePerYear = data[0].price
+                const pricePerMonth = data[1].price
                 setPageData({ ...data[0], price: { per_month: pricePerMonth, per_year: pricePerYear }});
                 setIsLoading(false);
             } else {
